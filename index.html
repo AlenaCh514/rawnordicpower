@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raw Nordic Power — Viking Dark Folk</title>
+<meta name="description" content="Raw Nordic Power — Viking battle anthems and dark Nordic folk from the fjord. Lyrics and videos.">
+<style>
+  :root {
+    --bg: #0b0d10;
+    --panel: #14181d;
+    --panel2: #1a1f26;
+    --line: #2a313a;
+    --text: #e8e4dc;
+    --muted: #9aa5b1;
+    --ember: #c96a2e;
+    --ember-bright: #e0a458;
+    --steel: #7d8a99;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,106,46,.16), transparent),
+      radial-gradient(ellipse 60% 40% at 50% 110%, rgba(70,90,110,.12), transparent);
+    pointer-events: none;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; position: relative; }
+  header { text-align: center; padding: 36px 0 10px; }
+  header img { width: 150px; height: 150px; border-radius: 50%; border: 2px solid var(--line); box-shadow: 0 0 40px rgba(0,0,0,.7); }
+  header h1 { font-size: 2.1em; letter-spacing: .14em; margin-top: 16px; text-transform: uppercase; }
+  header p { color: var(--muted); font-style: italic; margin-top: 6px; }
+  .rune-div { text-align: center; color: var(--ember); letter-spacing: .6em; margin: 18px 0; font-size: 1.1em; }
+  nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 10px 0 28px; }
+  nav a {
+    font-family: Arial, Helvetica, sans-serif; font-size: .82em; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; padding: 10px 18px;
+    border: 1px solid var(--line); border-radius: 3px; background: var(--panel);
+  }
+  nav a.active, nav a:hover { color: #fff; border-color: var(--ember); background: var(--panel2); }
+  .tab { display: none; }
+  .tab.active { display: block; }
+  h2 { font-size: 1.4em; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+  .song-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .song-card h3 { font-size: 1.25em; letter-spacing: .06em; }
+  .song-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; margin-bottom: 2px; border-bottom: 1px solid var(--line); }
+  .song-row .num { color: var(--ember); font-weight: bold; min-width: 28px; }
+  .song-row .t { font-size: .72em; letter-spacing: .05em; white-space: nowrap; }
+  .song-row .leader { flex: 1 1 40px; border-bottom: 2px dotted #555; height: 1px; min-width: 24px; }
+  .song-row .btns { display: flex; gap: 8px; flex-shrink: 0; }
+  .song-row .btn { width: 88px; padding: 6px 4px; font-size: .62em; text-align: center; white-space: nowrap; overflow: hidden; }
+  .banner { width: 100%; border-radius: 8px; display: block; margin: 6px 0 22px; }
+  .store-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 0 22px; }
+  .store-bar .btn { width: auto; padding: 9px 18px; font-size: .82em; }
+  footer .store-bar { margin: 14px 0 4px; }
+  .footer-logo { width: 84px; height: 84px; border-radius: 50%; border: 1px solid var(--line); display: block; margin: 0 auto 10px; }
+  @media (max-width: 900px){ .song-row { flex-wrap: wrap; } .song-row .leader { display: none; } }
+  .search { width: 100%; padding: 11px 14px; margin-bottom: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; color: var(--text); font-size: 1em; font-family: Arial, Helvetica, sans-serif; }
+  .search::placeholder { color: var(--muted); }
+  .search:focus { outline: none; border-color: var(--ember); }
+  .no-result { color: var(--muted); font-style: italic; padding: 10px 0; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .btn {
+    font-family: Arial, Helvetica, sans-serif; font-size: .82em; letter-spacing: .08em; text-transform: uppercase;
+    display: inline-block; padding: 9px 16px; border-radius: 3px; text-decoration: none; cursor: pointer;
+    border: 1px solid var(--ember); color: #fff; background: var(--ember);
+  }
+  .btn.ghost { background: transparent; color: var(--ember-bright); border-color: var(--ember); }
+  .btn.steel { background: transparent; color: var(--steel); border-color: var(--line); }
+  .btn.disabled { opacity: .45; cursor: default; }
+  .btn:hover:not(.disabled) { filter: brightness(1.15); }
+  .lyrics { white-space: pre-line; font-size: 1.08em; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+  .lyrics .chorus { color: var(--ember-bright); font-weight: bold; }
+  .note { color: var(--muted); font-size: .92em; font-style: italic; margin-top: 10px; }
+  .dl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px 20px; margin-bottom: 12px; }
+  .dl-row .t { flex: 1 1 200px; font-size: 1.1em; }
+  table { width: 100%; border-collapse: collapse; }
+  footer { text-align: center; color: var(--muted); font-size: .85em; margin-top: 40px; }
+  footer a { color: var(--ember-bright); }
+  .support-note { display: none; background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; margin-top: 14px; color: var(--muted); }
+  .support-note.show { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/logo.png" alt="Raw Nordic Power">
+    <h1>Raw Nordic Power</h1>
+    <p>Viking battle anthems &amp; dark Nordic folk from the fjord</p>
+  </header>
+  <div class="rune-div">ᚱ ᚨ ᚹ &nbsp;ᚾ ᛟ ᚱ ᛞ ᛁ ᚲ</div>
+  <div class="support-note" id="support-note-global">A link to support the artist will appear here soon.</div>
+  <img class="banner" src="assets/banner.png" alt="Ragna overlooking the fjord at sunset">
+  <div class="store-bar" id="store-bar-top"></div>
+  <nav>
+    <a href="#songs" data-tab="songs">Songs</a>
+    <a href="#albums" data-tab="albums">Albums</a>
+    <a href="#about" data-tab="about">About</a>
+  </nav>
+
+  <main>
+    <section id="tab-songs" class="tab">
+      <h2>Songs</h2>
+      <input type="search" class="search" id="search-songs" placeholder="Search songs...">
+      <div id="song-list"></div>
+      <div id="lyrics-view" style="display:none;"></div>
+    </section>
+
+    <section id="tab-albums" class="tab">
+      <h2>Albums</h2>
+      <p class="note">Albums will appear here once they are released on DistroKid. For now, enjoy the singles.</p>
+    </section>
+
+    <section id="tab-about" class="tab">
+      <h2>About</h2>
+      <p>Welcome to Raw Nordic Power — your immersive journey into the heart of the North.</p>
+      <p style="margin-top:12px;">Music of strength, courage, and an unbreakable spirit.</p>
+      <p style="margin-top:12px;">Here, the raw intensity of Viking battle anthems meets the deep, atmospheric sounds of the North — war drums, thunder, and voices that refuse to fall.</p>
+      <p style="margin-top:12px;">Ragna leads our pack from the fjord: a fictional shieldmaiden, forged from the sagas. Her face and voice are created with AI; the music and the stories are made with love.</p>
+    </section>
+  </main>
+
+  <footer>
+    <img class="footer-logo" src="assets/logo.png" alt="Raw Nordic Power logo">
+    <p>Raw Nordic Power — <a href="https://www.youtube.com/@RawNordicPower" target="_blank" rel="noopener">YouTube</a></p>
+    <p>Music of strength, courage, and an unbreakable spirit.</p>
+  </footer>
+</div>
+
+<script src="songs.js"></script>
+<script>
+function songById(id){ return SONGS.find(s=>s.id===id); }
+function supportBtn(){ return '<button class="btn steel support-btn">Support the Artist</button>'; }
+function videoBtn(song){
+  if(!song.video) return '<span class="btn ghost disabled">Video — soon</span>';
+  return '<a class="btn ghost" href="'+song.video+'" target="_blank" rel="noopener">Watch Video</a>';
+}
+
+let searchQuery = '';
+function matchSong(s){
+  return !searchQuery || s.title.toLowerCase().includes(searchQuery);
+}
+function renderSongs(){
+  const list = SONGS.filter(matchSong);
+  document.getElementById('song-list').innerHTML = list.length ? list.map(s =>
+    '<div class="song-row"><span class="num">'+(SONGS.indexOf(s)+1)+'.</span><span class="t">'+s.title+'</span><span class="leader"></span><span class="btns">' +
+    '<a class="btn ghost" href="#songs/'+s.id+'">Lyrics</a></span></div>'
+  ).join('') : '<p class="no-result">No songs found.</p>';
+}
+function renderLyricsView(id){
+  const s = songById(id);
+  const list = document.getElementById('song-list');
+  const view = document.getElementById('lyrics-view');
+  const search = document.getElementById('search-songs');
+  if(!s){ list.style.display=''; if(search) search.style.display=''; view.style.display='none'; return; }
+  list.style.display='none'; if(search) search.style.display='none'; view.style.display='';
+  view.innerHTML =
+    '<h3 style="font-size:1.2em;margin-bottom:14px;">'+s.title+'</h3>' +
+    '<div class="lyrics">'+highlightChorus(s.lyrics)+'</div>' +
+    '<div class="btn-row">' + videoBtn(s) + supportBtn() + '</div>' +
+    '<div class="support-note" id="support-note-song">A link to support the artist will appear here soon.</div>' +
+    '<div class="btn-row"><a class="btn ghost" href="#songs">← All songs</a></div>';
+}
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active', a.dataset.tab===name));
+  const tab = document.getElementById('tab-'+name);
+  if(tab) tab.classList.add('active');
+}
+function route(){
+  const h = location.hash.replace(/^#/,'');
+  const parts = h.split('/');
+  const tab = parts[0] || 'songs';
+  if(['songs','albums','about'].includes(tab)){
+    showTab(tab);
+    if(tab==='songs') renderLyricsView(parts[1] || null);
+  } else showTab('songs');
+}
+function highlightChorus(text){
+  return text.split('\n').map(line => {
+    if (/^(THE VALKYRIES CALL|RISE,|A NEW|BEHOLD|HEAR THIS|FALL AND RISE|FIGHT AGAIN|DEATH IS NOT|WE RISE AGAIN)/.test(line.trim()))
+      return '<span class="chorus">'+line+'</span>';
+    return line;
+  }).join('\n');
+}
+function renderStoreBars(){
+  const items = [
+    ['Spotify', LINKS.spotify],
+    ['Apple Music', LINKS.apple],
+    ['Amazon Music', LINKS.amazon],
+    ['YouTube', LINKS.youtube]
+  ].filter(x=>x[1]);
+  const html = items.map(x=>'<a class="btn" href="'+x[1]+'" target="_blank" rel="noopener">'+x[0]+'</a>').join('') +
+    '<button class="btn steel support-btn">Support the Artist</button>';
+  document.getElementById('store-bar-top').innerHTML = html;
+}
+document.addEventListener('click', e=>{
+  if(e.target.classList && e.target.classList.contains('support-btn')){
+    const scope = e.target.closest('section');
+    const n = (scope && scope.querySelector('.support-note')) || document.getElementById('support-note-global');
+    if(n) n.classList.toggle('show');
+  }
+});
+document.querySelectorAll('.search').forEach(inp=>{
+  inp.addEventListener('input', ()=>{
+    searchQuery = inp.value.trim().toLowerCase();
+    renderSongs();
+  });
+});
+window.addEventListener('hashchange', route);
+renderSongs(); renderStoreBars(); route();
+</script>
+</body>
+</html>
