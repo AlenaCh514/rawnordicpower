@@ -154,7 +154,9 @@ function renderSongs(){
   const list = SONGS.filter(matchSong);
   document.getElementById('song-list').innerHTML = list.length ? list.map(s =>
     '<div class="song-row"><span class="num">'+(SONGS.indexOf(s)+1)+'.</span><span class="t">'+s.title+'</span><span class="leader"></span><span class="btns">' +
-    '<a class="btn ghost" href="#songs/'+s.id+'">Lyrics</a></span></div>'
+    '<a class="btn ghost" href="#songs/'+s.id+'">Lyrics</a>' +
+    (s.video ? '<a class="btn ghost" href="'+s.video+'" target="_blank" rel="noopener">Video</a>' : '<span class="btn ghost disabled">Video — soon</span>') +
+    '</span></div>'
   ).join('') : '<p class="no-result">No songs found.</p>';
 }
 function renderLyricsView(id){
